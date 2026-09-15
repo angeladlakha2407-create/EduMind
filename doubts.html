@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EduMind | AI Doubts</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<link rel="stylesheet" href="css/style.css">
+
+
+<style>
+
+    /* =================================
+       AI DOUBTS PAGE
+    ================================= */
+
+    .doubt-layout {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 18px;
+        height: calc(100vh - 145px);
+        min-height: 600px;
+    }
+
+
+    /* =================================
+       CHAT PANEL
+    ================================= */
+
+    .chat-panel {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+
+    /* CHAT HEADER */
+
+    .chat-header {
+        padding: 17px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ai-profile {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .ai-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: var(--primary-light);
+        color: var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 17px;
+    }
+
+    .ai-profile strong {
+        display: block;
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+
+    .ai-profile span {
+        font-size: 8px;
+        color: var(--green);
+    }
+
+    .online-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 4px;
+    }
+
+    .new-chat {
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--primary);
+        padding: 8px 11px;
+        border-radius: 7px;
+        font-size: 9px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+
+    /* =================================
+       CHAT AREA
+    ================================= */
+
+    .chat-messages {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+        background: #fafafd;
+    }
+
+
+    /* WELCOME */
+
+    .ai-welcome {
+        text-align: center;
+        max-width: 500px;
+        margin: 25px auto 30px;
+    }
+
+    .welcome-ai-icon {
+        width: 52px;
+        height: 52px;
+        background: var(--primary-light);
+        color: var(--primary);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 23px;
+        margin: 0 auto 13px;
+    }
+
+    .ai-welcome h2 {
+        font-size: 18px;
+        margin-bottom: 7px;
+    }
+
+    .ai-welcome p {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+
+    /* QUICK QUESTIONS */
+
+    .quick-questions {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin-top: 17px;
+    }
+
+    .quick-question {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 8px 11px;
+        border-radius: 20px;
+        font-size: 8px;
+        color: var(--text);
+        cursor: pointer;
+    }
+
+    .quick-question:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+
+    /* MESSAGE */
+
+    .message {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        max-width: 78%;
+    }
+
+    .message.user {
+        margin-left: auto;
+        flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: var(--primary-light);
+        color: var(--primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 9px;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .message.user .message-avatar {
+        background: #ececf0;
+        color: var(--text);
+    }
+
+    .message-content {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px 13px;
+    }
+
+    .message.user .message-content {
+        background: var(--primary);
+        color: white;
+        border: none;
+    }
+
+    .message-content strong {
+        font-size: 10px;
+    }
+
+    .message-content p {
+        font-size: 9px;
+        line-height: 1.65;
+        margin-top: 5px;
+    }
+
+    .message.user .message-content p {
+        color: white;
+    }
+
+
+    /* =================================
+       CHAT INPUT
+    ================================= */
+
+    .chat-input-area {
+        padding: 13px 17px;
+        border-top: 1px solid var(--border);
+        background: white;
+    }
+
+    .chat-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 6px 7px 6px 12px;
+    }
+
+    .chat-input input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-family: inherit;
+        font-size: 10px;
+    }
+
+    .chat-input button {
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 7px;
+        background: var(--primary);
+        color: white;
+        cursor: pointer;
+    }
+
+    .input-hint {
+        font-size: 7px;
+        color: var(--muted);
+        margin-top: 7px;
+        text-align: center;
+    }
+
+
+    /* =================================
+       RIGHT SIDEBAR
+    ================================= */
+
+    .doubt-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+
+    /* MODE CARD */
+
+    .mode-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+    .mode-card h3 {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .mode-card > p {
+        font-size: 8px;
+        color: var(--muted);
+        margin-bottom: 15px;
+    }
+
+
+    /* SELECT */
+
+    .setting-label {
+        display: block;
+        font-size: 8px;
+        color: var(--muted);
+        margin-bottom: 6px;
+        margin-top: 13px;
+    }
+
+    .setting-select {
+        width: 100%;
+        padding: 8px 9px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: white;
+        font-family: inherit;
+        font-size: 9px;
+        outline: none;
+    }
+
+
+    /* EXPLANATION LEVEL */
+
+    .level-options {
+        display: flex;
+        gap: 5px;
+    }
+
+    .level-option {
+        flex: 1;
+        text-align: center;
+        padding: 7px 4px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 7px;
+        cursor: pointer;
+    }
+
+    .level-option.active {
+        background: var(--primary-light);
+        border-color: var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+
+    /* =================================
+       CONCEPT CARD
+    ================================= */
+
+    .concept-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+    .concept-card h3 {
+        font-size: 11px;
+        margin-bottom: 13px;
+    }
+
+    .concept-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f3;
+    }
+
+    .concept-item:last-child {
+        border-bottom: none;
+    }
+
+    .concept-item strong {
+        display: block;
+        font-size: 9px;
+        margin-bottom: 3px;
+    }
+
+    .concept-item span {
+        font-size: 8px;
+        color: var(--muted);
+        line-height: 1.4;
+    }
+
+
+    /* =================================
+       SUGGESTIONS
+    ================================= */
+
+    .suggestion-card {
+        background: linear-gradient(
+            135deg,
+            #252440,
+            #39366e
+        );
+
+        color: white;
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+    .suggestion-card span {
+        color: #aaa6ff;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .suggestion-card h3 {
+        font-size: 12px;
+        margin: 8px 0;
+    }
+
+    .suggestion-card p {
+        color: #c8c7d8;
+        font-size: 8px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+    }
+
+    .suggestion-card button {
+        border: none;
+        background: white;
+        color: #2c2a50;
+        padding: 7px 10px;
+        border-radius: 6px;
+        font-size: 8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+
+    /* =================================
+       RESPONSIVE
+    ================================= */
+
+    @media (max-width: 1050px) {
+
+        .doubt-layout {
+            grid-template-columns: 1fr;
+            height: auto;
+        }
+
+        .doubt-sidebar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+        .doubt-sidebar {
+            grid-template-columns: 1fr;
+        }
+
+        .message {
+            max-width: 90%;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="app">
+
+```
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            E
+        </div>
+
+        <span>
+            EduMind
+        </span>
+
+    </div>
+
+
+    <div class="nav-section">
+
+        <p class="nav-title">
+            MAIN MENU
+        </p>
+
+
+        <a href="index.html" class="nav-item">
+            <span>⌂</span>
+            Dashboard
+        </a>
+
+
+        <a href="learn.html" class="nav-item">
+            <span>📚</span>
+            Learn
+        </a>
+
+
+        <a href="practice.html" class="nav-item">
+            <span>✏</span>
+            Practice
+        </a>
+
+
+        <a href="doubts.html" class="nav-item active">
+            <span>💡</span>
+            AI Doubts
+        </a>
+
+
+        <a href="planner.html" class="nav-item">
+            <span>📅</span>
+            Study Planner
+        </a>
+
+
+        <a href="career.html" class="nav-item">
+            <span>🚀</span>
+            Career Roadmap
+        </a>
+
+    </div>
+
+
+    <div>
+
+        <div class="upgrade-card">
+
+            <div class="upgrade-icon">
+                ✦
+            </div>
+
+            <h4>
+                Learn smarter
+            </h4>
+
+            <p>
+                Turn your weak areas into strengths with personalized learning.
+            </p>
+
+            <button>
+                Explore Features
+            </button>
+
+        </div>
+
+
+        <div class="user-mini">
+
+            <div class="avatar">
+                A
+            </div>
+
+            <div>
+
+                <strong>
+                    Student
+                </strong>
+
+                <span>
+                    Keep learning 🚀
+                </span>
+
+            </div>
+
+            <span class="more">
+                •••
+            </span>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div>
+
+            <p class="welcome-small">
+                AI LEARNING ASSISTANT
+            </p>
+
+            <h1>
+                Ask anything. Learn better. 💡
+            </h1>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button class="icon-button">
+                🔔
+            </button>
+
+
+            <div class="profile">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Student
+                    </strong>
+
+                    <span>
+                        BTech CSE-AI
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= DOUBT CONTENT ================= -->
+
+    <div class="dashboard">
+
+
+        <div class="doubt-layout">
+
+
+            <!-- =================================
+                 CHAT
+            ================================= -->
+
+            <section class="chat-panel">
+
+
+                <!-- CHAT HEADER -->
+
+                <div class="chat-header">
+
+                    <div class="ai-profile">
+
+                        <div class="ai-avatar">
+                            ✦
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                EduMind AI Tutor
+                            </strong>
+
+                            <span>
+                                <span class="online-dot"></span>
+                                Ready to help
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="new-chat">
+                        + New Chat
+                    </button>
+
+                </div>
+
+
+
+                <!-- MESSAGES -->
+
+                <div class="chat-messages">
+
+
+                    <!-- WELCOME -->
+
+                    <div class="ai-welcome">
+
+                        <div class="welcome-ai-icon">
+                            ✦
+                        </div>
+
+                        <h2>
+                            Hey! What are you stuck on?
+                        </h2>
+
+                        <p>
+                            Ask me anything about your subjects.
+                            I'll explain it according to your
+                            learning level.
+                        </p>
+
+
+                        <div class="quick-questions">
+
+                            <button class="quick-question">
+                                Explain recursion simply
+                            </button>
+
+                            <button class="quick-question">
+                                What is normalization?
+                            </button>
+
+                            <button class="quick-question">
+                                Explain OOP with example
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SAMPLE USER MESSAGE -->
+
+                    <div class="message user">
+
+                        <div class="message-avatar">
+                            A
+                        </div>
+
+                        <div class="message-content">
+
+                            <strong>
+                                You
+                            </strong>
+
+                            <p>
+                                Can you explain recursion in a simple way?
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SAMPLE AI MESSAGE -->
+
+                    <div class="message">
+
+                        <div class="message-avatar">
+                            ✦
+                        </div>
+
+                        <div class="message-content">
+
+                            <strong>
+                                EduMind AI
+                            </strong>
+
+                            <p>
+                                Of course! Think of recursion as a
+                                function solving a smaller version
+                                of the same problem again and again.
+                                <br><br>
+
+                                The most important thing is the
+                                <b>base case</b>. It tells the
+                                function when to stop.
+                                <br><br>
+
+                                For example, when calculating
+                                factorial:
+                                <br><br>
+
+                                <b>5! = 5 × 4 × 3 × 2 × 1</b>
+                                <br><br>
+
+                                The function keeps calling itself
+                                with a smaller number until it
+                                reaches the stopping condition.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- INPUT -->
+
+                <div class="chat-input-area">
+
+                    <div class="chat-input">
+
+                        <input
+                            type="text"
+                            placeholder="Ask your doubt here..."
+                        >
+
+                        <button>
+                            ↑
+                        </button>
+
+                    </div>
+
+                    <p class="input-hint">
+                        EduMind AI can explain concepts, give examples and help you prepare for exams.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================
+                 RIGHT SIDEBAR
+            ================================= -->
+
+            <aside class="doubt-sidebar">
+
+
+                <!-- LEARNING MODE -->
+
+                <div class="mode-card">
+
+                    <h3>
+                        Personalize your explanation
+                    </h3>
+
+                    <p>
+                        Choose how EduMind should teach you.
+                    </p>
+
+
+                    <label class="setting-label">
+                        Subject
+                    </label>
+
+                    <select class="setting-select">
+
+                        <option>
+                            Data Structures
+                        </option>
+
+                        <option>
+                            Python
+                        </option>
+
+                        <option>
+                            DBMS
+                        </option>
+
+                        <option>
+                            Mathematics
+                        </option>
+
+                    </select>
+
+
+                    <label class="setting-label">
+                        Explanation level
+                    </label>
+
+                    <div class="level-options">
+
+                        <div class="level-option active">
+                            Simple
+                        </div>
+
+                        <div class="level-option">
+                            Detailed
+                        </div>
+
+                        <div class="level-option">
+                            Exam
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- KEY CONCEPTS -->
+
+                <div class="concept-card">
+
+                    <h3>
+                        Related concepts
+                    </h3>
+
+
+                    <div class="concept-item">
+
+                        <strong>
+                            Base Case
+                        </strong>
+
+                        <span>
+                            The condition that stops recursion.
+                        </span>
+
+                    </div>
+
+
+                    <div class="concept-item">
+
+                        <strong>
+                            Recursive Call
+                        </strong>
+
+                        <span>
+                            A function calling itself.
+                        </span>
+
+                    </div>
+
+
+                    <div class="concept-item">
+
+                        <strong>
+                            Call Stack
+                        </strong>
+
+                        <span>
+                            Memory used to keep track of function calls.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUGGESTION -->
+
+                <div class="suggestion-card">
+
+                    <span>
+                        AI SUGGESTION
+                    </span>
+
+                    <h3>
+                        Want to test your understanding?
+                    </h3>
+
+                    <p>
+                        Try a quick recursion quiz after
+                        learning the concept.
+                    </p>
+
+                    <button>
+                        Practice Now →
+                    </button>
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+    </div>
+
+</main>
+```
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>

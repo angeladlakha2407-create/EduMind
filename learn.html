@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMind | Learn</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =================================
+           LEARN PAGE
+        ================================= */
+
+        .learn-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .learn-header h2 {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .learn-header p {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .learn-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .learn-search {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 13px;
+            width: 210px;
+            outline: none;
+            font-family: inherit;
+            font-size: 11px;
+        }
+
+        .upload-btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* SUBJECT CARDS */
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .subject-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 30, 60, 0.06);
+        }
+
+        .subject-card.active {
+            border-color: var(--primary);
+            background: #fafaff;
+        }
+
+        .subject-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .subject-symbol {
+            width: 35px;
+            height: 35px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .subject-symbol.python {
+            background: #efedff;
+            color: var(--primary);
+        }
+
+        .subject-symbol.dsa {
+            background: #fff0e0;
+            color: var(--orange);
+        }
+
+        .subject-symbol.dbms {
+            background: #e9f8f2;
+            color: var(--green);
+        }
+
+        .subject-symbol.math {
+            background: #eaf2ff;
+            color: var(--blue);
+        }
+
+        .subject-card h3 {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .subject-card p {
+            font-size: 9px;
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .subject-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subject-progress .progress-bar {
+            height: 5px;
+        }
+
+        .subject-progress span {
+            font-size: 9px;
+            color: var(--muted);
+        }
+
+
+        /* MAIN LEARNING GRID */
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.8fr;
+            gap: 18px;
+        }
+
+
+        /* TOPICS */
+
+        .topic-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topic-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f3;
+        }
+
+        .topic-row:last-child {
+            border-bottom: none;
+        }
+
+        .topic-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #f5f5fa;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .topic-info {
+            flex: 1;
+        }
+
+        .topic-info strong {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+
+        .topic-info span {
+            font-size: 9px;
+            color: var(--muted);
+        }
+
+        .topic-status {
+            padding: 5px 8px;
+            border-radius: 20px;
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .topic-status.done {
+            background: #e8f8f2;
+            color: var(--green);
+        }
+
+        .topic-status.progress {
+            background: #efedff;
+            color: var(--primary);
+        }
+
+        .topic-status.not-started {
+            background: #f1f1f4;
+            color: var(--muted);
+        }
+
+
+        /* AI SUMMARY CARD */
+
+        .ai-card {
+            background: linear-gradient(
+                135deg,
+                #24233d,
+                #35336a
+            );
+
+            border-radius: 14px;
+            padding: 22px;
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        .ai-card-label {
+            color: #aaa6ff;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .ai-card h3 {
+            font-size: 17px;
+            margin: 10px 0;
+        }
+
+        .ai-card p {
+            color: #c8c7d8;
+            font-size: 10px;
+            line-height: 1.6;
+            margin-bottom: 17px;
+        }
+
+        .ai-btn {
+            background: white;
+            color: #2d2b50;
+            padding: 9px 13px;
+            border-radius: 7px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+
+        /* LEARNING PROGRESS */
+
+        .learning-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .learning-stat {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .learning-stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .learning-stat-info {
+            flex: 1;
+        }
+
+        .learning-stat-info strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 3px;
+        }
+
+        .learning-stat-info span {
+            font-size: 9px;
+            color: var(--muted);
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+
+            .subject-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .learn-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .learn-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .learn-actions {
+                width: 100%;
+            }
+
+            .learn-search {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">E</div>
+            <span>EduMind</span>
+        </div>
+
+
+        <div class="nav-section">
+
+            <p class="nav-title">MAIN MENU</p>
+
+            <a href="index.html" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="learn.html" class="nav-item active">
+                <span>📚</span>
+                Learn
+            </a>
+
+            <a href="practice.html" class="nav-item">
+                <span>✏</span>
+                Practice
+            </a>
+
+            <a href="doubts.html" class="nav-item">
+                <span>💡</span>
+                AI Doubts
+            </a>
+
+            <a href="planner.html" class="nav-item">
+                <span>📅</span>
+                Study Planner
+            </a>
+
+            <a href="career.html" class="nav-item">
+                <span>🚀</span>
+                Career Roadmap
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <div class="upgrade-card">
+
+                <div class="upgrade-icon">
+                    ✦
+                </div>
+
+                <h4>Learn smarter</h4>
+
+                <p>
+                    Turn your weak areas into strengths with personalized learning.
+                </p>
+
+                <button>
+                    Explore Features
+                </button>
+
+            </div>
+
+
+            <div class="user-mini">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+                    <strong>Student</strong>
+                    <span>Keep learning 🚀</span>
+                </div>
+
+                <span class="more">•••</span>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="welcome-small">
+                    LEARNING CENTER
+                </p>
+
+                <h1>
+                    What do you want to learn? 📚
+                </h1>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <button class="icon-button">
+                    🔔
+                </button>
+
+                <div class="profile">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Student</strong>
+                        <span>BTech CSE-AI</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= LEARN CONTENT ================= -->
+
+        <div class="dashboard">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="learn-header">
+
+                <div>
+
+                    <h2>
+                        Explore your subjects
+                    </h2>
+
+                    <p>
+                        Learn concepts, revise topics and build your understanding.
+                    </p>
+
+                </div>
+
+
+                <div class="learn-actions">
+
+                    <input
+                        type="text"
+                        class="learn-search"
+                        placeholder="Search topics..."
+                    >
+
+                    <button class="upload-btn">
+                        + Upload Notes
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= SUBJECTS ================= -->
+
+            <div class="subject-grid">
+
+
+                <div class="subject-card active">
+
+                    <div class="subject-card-top">
+
+                        <div class="subject-symbol python">
+                            Py
+                        </div>
+
+                        <span>
+                            90%
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        Python
+                    </h3>
+
+                    <p>
+                        Programming & Development
+                    </p>
+
+                    <div class="subject-progress">
+
+                        <div class="progress-bar">
+                            <div style="width:90%;"></div>
+                        </div>
+
+                        <span>
+                            9/10
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="subject-card">
+
+                    <div class="subject-card-top">
+
+                        <div class="subject-symbol dsa">
+                            D
+                        </div>
+
+                        <span>
+                            80%
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        Data Structures
+                    </h3>
+
+                    <p>
+                        Algorithms & Problem Solving
+                    </p>
+
+                    <div class="subject-progress">
+
+                        <div class="progress-bar">
+                            <div style="width:80%;"></div>
+                        </div>
+
+                        <span>
+                            8/10
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="subject-card">
+
+                    <div class="subject-card-top">
+
+                        <div class="subject-symbol dbms">
+                            DB
+                        </div>
+
+                        <span>
+                            62%
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        DBMS
+                    </h3>
+
+                    <p>
+                        Databases & SQL
+                    </p>
+
+                    <div class="subject-progress">
+
+                        <div class="progress-bar">
+                            <div style="width:62%;"></div>
+                        </div>
+
+                        <span>
+                            6/10
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="subject-card">
+
+                    <div class="subject-card-top">
+
+                        <div class="subject-symbol math">
+                            ∑
+                        </div>
+
+                        <span>
+                            70%
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        Mathematics
+                    </h3>
+
+                    <p>
+                        Calculus & Probability
+                    </p>
+
+                    <div class="subject-progress">
+
+                        <div class="progress-bar">
+                            <div style="width:70%;"></div>
+                        </div>
+
+                        <span>
+                            7/10
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= LEARNING GRID ================= -->
+
+            <div class="learn-grid">
+
+
+                <!-- LEFT : TOPICS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h3>
+                                Python Topics
+                            </h3>
+
+                            <p>
+                                Continue where you left off.
+                            </p>
+
+                        </div>
+
+                        <button class="text-btn">
+                            View all →
+                        </button>
+
+                    </div>
+
+
+                    <div class="topic-list">
+
+
+                        <div class="topic-row">
+
+                            <div class="topic-number">
+                                01
+                            </div>
+
+                            <div class="topic-info">
+
+                                <strong>
+                                    Python Basics
+                                </strong>
+
+                                <span>
+                                    Variables, data types and operators
+                                </span>
+
+                            </div>
+
+                            <span class="topic-status done">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="topic-row">
+
+                            <div class="topic-number">
+                                02
+                            </div>
+
+                            <div class="topic-info">
+
+                                <strong>
+                                    Functions
+                                </strong>
+
+                                <span>
+                                    Functions, arguments and return values
+                                </span>
+
+                            </div>
+
+                            <span class="topic-status done">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="topic-row">
+
+                            <div class="topic-number">
+                                03
+                            </div>
+
+                            <div class="topic-info">
+
+                                <strong>
+                                    Object-Oriented Programming
+                                </strong>
+
+                                <span>
+                                    Classes, objects and inheritance
+                                </span>
+
+                            </div>
+
+                            <span class="topic-status progress">
+                                In Progress
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="topic-row">
+
+                            <div class="topic-number">
+                                04
+                            </div>
+
+                            <div class="topic-info">
+
+                                <strong>
+                                    File Handling
+                                </strong>
+
+                                <span>
+                                    Reading, writing and working with files
+                                </span>
+
+                            </div>
+
+                            <span class="topic-status not-started">
+                                Not Started
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="topic-row">
+
+                            <div class="topic-number">
+                                05
+                            </div>
+
+                            <div class="topic-info">
+
+                                <strong>
+                                    Exception Handling
+                                </strong>
+
+                                <span>
+                                    Errors, exceptions and try/except
+                                </span>
+
+                            </div>
+
+                            <span class="topic-status not-started">
+                                Not Started
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT COLUMN -->
+
+                <div>
+
+
+                    <!-- AI SUMMARY -->
+
+                    <div class="ai-card">
+
+                        <span class="ai-card-label">
+                            AI LEARNING ASSISTANT
+                        </span>
+
+                        <h3>
+                            Turn your notes into learning material.
+                        </h3>
+
+                        <p>
+                            Upload your notes and EduMind can
+                            summarize concepts, create revision
+                            points and generate practice questions.
+                        </p>
+
+                        <button class="ai-btn">
+                            Try AI Summary →
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- LEARNING PROGRESS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <h3>
+                                    Your learning progress
+                                </h3>
+
+                                <p>
+                                    Keep improving every day.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="learning-stats">
+
+
+                            <div class="learning-stat">
+
+                                <div class="learning-stat-icon">
+                                    ✓
+                                </div>
+
+                                <div class="learning-stat-info">
+
+                                    <strong>
+                                        Topics completed
+                                    </strong>
+
+                                    <span>
+                                        12 out of 18 topics
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="learning-stat">
+
+                                <div class="learning-stat-icon">
+                                    ⏱
+                                </div>
+
+                                <div class="learning-stat-info">
+
+                                    <strong>
+                                        Learning time
+                                    </strong>
+
+                                    <span>
+                                        14.5 hours this week
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="learning-stat">
+
+                                <div class="learning-stat-icon">
+                                    🔥
+                                </div>
+
+                                <div class="learning-stat-info">
+
+                                    <strong>
+                                        Current streak
+                                    </strong>
+
+                                    <span>
+                                        6 days
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
